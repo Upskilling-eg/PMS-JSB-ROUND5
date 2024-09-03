@@ -1,42 +1,77 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.auth-container{
+    background-image: url(./assets/images/bg3.png);
+    background-size: cover;
+    background-position: center center
   }
-  to {
-    transform: rotate(360deg);
+  
+  .auth-container form{
+    background-color: rgba(49,89,81,0.5);
+    color:#fff 
   }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+  
+  .auth-container span{
+    font-size: 10px;
+  } 
+  .auth-container form h4{
+    color:#EF9B28;
+    position: relative;
+  } 
+  .auth-container form h4::after{
+    content:'';
+    width: 10px;
+    height: 2px;
+    background-color: #EF9B28;
+    position: absolute;
+    top:100%;
+    left:0
   }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
+  .auth-container form input,.auth-container form input:focus {
+    border:none;
+    border-radius: none;
+    border-bottom: 1px #c5c5c5 solid;
+    color: #fff;
+    background-color: transparent;
+    font-size: 14px;
+  }
+  .auth-container form input::placeholder{
+    color:#fff
+  }
+  .auth-container form button{
+    background-color: #EF9B28;
+    border-radius: 50px;
+  }
+  
+  .sidebar-cont{
+    background-color: #1F263E;
+    border-top-right-radius: 50px;
+  }
+  
+  .sidebar-container .ps-sidebar-container{
+   background-color: #0E382F;
+   height: 100vh;
+   color: #fff;
+  }
+  
+  .sidebar-container .ps-sidebar-root
+  {
+    border: none;
+    width: 200px;
+    min-width: 200px;
+  }
+  
+  .sidebar-container .ps-sidebar-container .ps-menu-button:hover{
+    color:#EF9B28;
+    background-color: transparent
+  }
+  
+  .sidebar-container .ps-sidebar-container .logo-toggle a:hover{
+    background-color: transparent
+  
+  }
+  .sidebar-container .ps-sidebar-container .logo-toggle span{
+    width: fit-content;
+  }
+  .logo-toggle img{
+    width: 150px;
+  }
+  
