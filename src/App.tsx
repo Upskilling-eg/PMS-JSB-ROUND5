@@ -19,8 +19,10 @@ import TasksList from "./modules/Tasks/components/TasksList/TasksList";
 import TaskData from "./modules/Tasks/components/TaskData/TaskData";
 import UsersList from "./modules/Users/components/UsersList/UsersList";
 import ProtectedRoute from "./modules/Shared/components/ProtectedRoute/ProtectedRoute";
+import { ToastContainer } from "react-toastify";
 
 function App() {
+  
   const routes = createBrowserRouter([
     {
       path: "",
@@ -64,7 +66,12 @@ function App() {
     },
   ]);
 
-  return <RouterProvider router={routes}></RouterProvider>;
+  return (
+    <>
+      <ToastContainer />
+      <RouterProvider router={routes}></RouterProvider>)
+    </>
+  );
 }
 
 export default App;

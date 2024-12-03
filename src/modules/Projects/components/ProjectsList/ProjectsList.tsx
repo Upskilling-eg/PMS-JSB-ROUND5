@@ -1,16 +1,24 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { PROJECTSURLS, requestHeader } from "../../../../constants/URLS";
+import { axiosInstance } from "../../../../constants/api";
+import { PROJECTSURLS } from "../../../../constants/api/URLS";
 import { useNavigate } from "react-router-dom";
 
+interface projectData {
+  id: number;
+  title: string;
+  description: string;
+  task: object[];
+}
+
 export default function ProjectsList() {
+  const navigate = useNavigate();
   const [projectsList, setProjectsList] = useState([]);
-  let navigate = useNavigate();
-  let getAllProjects = async () => {
+
+  const getAllProjects = async () => {
     try {
-      let response = await axios.get(PROJECTSURLS.getAll, {
-        headers: requestHeader,
-      });
+      let response = await axiosInstance.get(PROJECTSURLS.getAll);
+      console.log(response.data.data);
+
       setProjectsList(response.data.data);
     } catch (error) {
       console.log(error);
@@ -23,46 +31,40 @@ export default function ProjectsList() {
 
   return (
     <>
-      <div className="title d-flex px-4 py-2 justify-content-between align-items-center">
-        <h5>Projects</h5>
+      <div className="title d-flex p-5 justify-content-between">
+        <h3>Projects </h3>
         <button
           onClick={() => navigate("/dashboard/project-data")}
-          className="btn btn-warning px-3 py-2 rounded-5"
+          className="btn btn-warning"
         >
           Add new project
         </button>
       </div>
-      <div className="p-3">
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Title</th>
-              <th scope="col">No of tasks</th>
-              <th scope="col">Description</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {projectsList.length > 0 ? (
-              projectsList.map((project: any) => (
-                <tr>
-                  <th scope="row">{project.id}</th>
+      <div className="p-5">
+        {projectsList.length > 0 ? (
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">No of Tasks</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {projectsList.map((project: projectData) => (
+                <tr key={project.id}>
                   <td>{project.title}</td>
-                  <td>{project.task.length}</td>
                   <td>{project.description}</td>
-                  <td>
-                    <i className="fa fa-eye" aria-hidden="true"></i>
-                    <i className="fa fa-edit mx-2" aria-hidden="true"></i>
-                    <i className="fa fa-trash" aria-hidden="true"></i>
-                  </td>
+                  <td>{project.task.length}</td>
+                  <td>actions</td>
                 </tr>
-              ))
-            ) : (
-              <h1>no dataaa</h1>
-            )}
-          </tbody>
-        </table>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <h2>no dataaaa</h2>
+        )}
       </div>
     </>
   );

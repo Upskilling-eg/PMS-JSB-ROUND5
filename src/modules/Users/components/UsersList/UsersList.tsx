@@ -1,19 +1,14 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import {
-  BASE_IMG_URL,
-  PROJECTSURLS,
-  requestHeader,
-  USERSSURLS,
-} from "../../../../constants/URLS";
+import React, { useState, useEffect } from "react";
+import { axiosInstance } from "../../../../constants/api";
+import { USERSSURLS } from "../../../../constants/api/URLS";
 
 export default function UsersList() {
   const [usersList, setUsersList] = useState([]);
-  let getAllUsers = async () => {
+
+  const getAllUsers = async () => {
     try {
-      let response = await axios.get(USERSSURLS.getUsersUrl, {
-        headers: requestHeader,
-      });
+      let response = await axiosInstance.get(USERSSURLS.getUsersUrl);
+      console.log(response.data.data);
 
       setUsersList(response.data.data);
     } catch (error) {
@@ -21,90 +16,72 @@ export default function UsersList() {
     }
   };
 
-  let toggleUserStatus = async (id: string) => {
+  const changeUserStatus = async (id: number) => {
     try {
-      let response = await axios.put(
-        USERSSURLS.toggleStatusUrl(id),
-        {},
-        {
-          headers: requestHeader,
-        }
-      );
-
+      let response = await axiosInstance.put(USERSSURLS.toggleStatusUrl(id));
       getAllUsers();
     } catch (error) {
       console.log(error);
     }
   };
+
   useEffect(() => {
     getAllUsers();
   }, []);
   return (
     <>
-      <div className="title d-flex px-4 py-2 justify-content-between align-items-center">
-        <h5>Users</h5>
-      </div>
-      <div className="p-3">
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col">User name</th>
-              <th scope="col">Status</th>
-              <th scope="col">Image</th>
-              <th scope="col">Phone number</th>
-              <th scope="col">Email</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {usersList.length > 0 ? (
-              usersList.map((user: any) => (
-                <tr>
-                  <th scope="row">{user.userName}</th>
+      <div className="p-5">
+        {usersList.length > 0 ? (
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col">User name</th>
+                <th scope="col">Status</th>
+                <th scope="col">Phone number</th>
+                <th scope="col">Email</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {usersList.map((user: any) => (
+                <tr key={user.id}>
+                  <td>{user.userName}</td>
                   <td>
                     {user.isActivated ? (
-                      <button className="btn btn-success rounded-5">
-                        Active
-                      </button>
+                      <span className="bg-success rounded rounded-5 px-3 py-2">
+                        active
+                      </span>
                     ) : (
-                      <button className="btn btn-danger rounded-5">
-                        Not Active
-                      </button>
-                    )}
-                  </td>
-                  <td>
-                    {" "}
-                    {user.imagePath ? (
-                      <img src={`${BASE_IMG_URL}/${user.imagePath}`} />
-                    ) : (
-                      <span>mfe4</span>
+                      <span className="bg-danger rounded rounded-5 px-3 py-2">
+                        not active
+                      </span>
                     )}
                   </td>
                   <td>{user.phoneNumber}</td>
-                  <td>{user.email}</td>
 
+                  <td>{user.email}</td>
                   <td>
                     {user.isActivated ? (
                       <i
-                        onClick={() => toggleUserStatus(user.id)}
-                        className="fa fa-toggle-off text-success fa-2x"
+                        className="fa fa-toggle-off fa-2x"
                         aria-hidden="true"
+                        onClick={() => changeUserStatus(user.id)}
                       ></i>
                     ) : (
                       <i
-                        onClick={() => toggleUserStatus(user.id)}
-                        className="fa fa-toggle-on text-danger fa-2x"
+                        className="fa fa-toggle-on fa-2x"
                         aria-hidden="true"
+                        onClick={() => changeUserStatus(user.id)}
                       ></i>
                     )}
                   </td>
                 </tr>
-              ))
-            ) : (
-              <h1>no dataaa</h1>
-            )}
-          </tbody>
-        </table>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <h2>no dataaaa</h2>
+        )}
       </div>
     </>
   );

@@ -6,12 +6,14 @@ import logo from "../../../../assets/images/PMS 3.svg";
 
 import axios from "axios";
 import { ToastContainer } from "react-toastify";
-import { AUTHURLS } from "../../../../constants/URLS";
 import { AuthContext } from "../../../../context/authcontext";
+import { loginData } from "../../../../interfaces/auth-interface";
+import { AUTHURLS } from "../../../../constants/api/URLS";
 
 export default function Login() {
   const navigate = useNavigate();
   let { saveLoginData }: any = useContext(AuthContext);
+  //any super global data type
 
   const {
     register,
@@ -19,25 +21,22 @@ export default function Login() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: loginData) => {
     axios
       .post(`${AUTHURLS.loginUrl}`, data)
       .then((response: any) => {
         localStorage.setItem("token", response.data.token);
         saveLoginData();
-        // getToastValue("success","login successsfully")
 
         navigate("/dashboard");
       })
       .catch((error: any) => {
         alert("error");
-        // getToastValue("error",error.response.data.message)
       });
   };
 
   return (
     <div className="container-fluid auth-container ">
-      <ToastContainer />
       <div className="row vh-100 d-flex justify-content-center align-items-center">
         <div className="col-lg-5 col-md-7 col-sm-9">
           <div className="py-4 rounded-2">

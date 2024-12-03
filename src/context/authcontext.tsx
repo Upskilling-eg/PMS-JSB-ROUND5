@@ -3,7 +3,7 @@ import { createContext, useEffect, useState } from "react";
 
 export let AuthContext = createContext(null);
 
-export function AuthContextProvider(props: any) {
+export function AuthContextProvider(props) {
   const [loginData, setLoginData] = useState(null);
 
   let saveLoginData = () => {
