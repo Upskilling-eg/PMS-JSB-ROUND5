@@ -1,6 +1,3 @@
-import React from "react";
-import Navbar from "../Navbar/Navbar";
-import Sidebar from "../Sidebar/Sidebar";
 import { Outlet } from "react-router-dom";
 import NavBar from "../Navbar/Navbar";
 import SideBar from "../Sidebar/Sidebar";
@@ -16,9 +13,7 @@ export default function MasterLayout() {
         </div>
 
         <div className="w-100">
-          <div>
-            <Outlet />
-          </div>
+          <Outlet />
         </div>
       </div>
     </>

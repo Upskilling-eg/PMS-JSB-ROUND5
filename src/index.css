@@ -1,0 +1,18 @@
+body {
+  --main-color: white;
+  --secondary-color: black;
+}
+
+.light {
+  --main-color: black;
+  --secondary-color: white;
+}
+
+.wrapper {
+  & .ayHaga {
+    background: var(--secondary-color);
+    & h2 {
+      color: var(--main-color);
+    }
+  }
+}
